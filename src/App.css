@@ -1,0 +1,53 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.info-align {
+  cursor: pointer;
+  color: #d0d05f;
+}
+
+.welcome-header {
+  font-size: -webkit-xxx-large
+}
+
+.planets-items-alignmnet {
+  border: solid antiquewhite;
+}
+
+.planet-header {
+  font-family: cursive;
+  color: aliceblue;
+}
+
+.planet-info-style {
+  display: inline-block;
+  border-radius: 15px 50px 30px;
+  background: antiquewhite;
+  width: 26%;
+}
+
+.login-body {
+  background-image: url("starwars.jpg")
+}
+
+.trend-css {
+  color: yellow
+}
+
+.logout-style {
+  margin-left: 89%;
+  font-size: larger;
+  font-family: cursive;
+}
+
+a {
+  color: antiquewhite;
+}
