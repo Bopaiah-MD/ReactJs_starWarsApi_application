@@ -9,7 +9,8 @@ class UserGreeting extends Component {
     super(props)
     this.state = {
       searchTerm: '',
-      planets: []
+      planets: [],
+      sortedPopulation: []
     }
   }
 
@@ -20,7 +21,7 @@ class UserGreeting extends Component {
   getPeople = () => {
     return axios.get("https://swapi.co/api/planets/").then((res) => {
       this.setState({ planets: res.data.results })
-    })
+})
 
   }
 
@@ -28,8 +29,27 @@ class UserGreeting extends Component {
 
     const { planets } = this.state
 
-    return (
+    function compare(a, b) {
 
+      if (( a.population !== undefined || null ) && ( typeof b.population !== undefined || null )) {
+
+        const popA = parseInt(a.population,10);
+        const popB = parseInt(b.population,10);
+
+        let comparison = 0;
+        if (popA > popB) {
+          comparison = 1;
+        } else if (popA < popB) {
+          comparison = -1;
+        }
+        return comparison;
+      }
+
+    }
+
+    let sortedResultSet = planets.sort(compare);
+
+    return (
       <div className="login-body">
 
         <h1 className="trend-css" >Star Wars Character and planets Info</h1>
@@ -40,7 +60,7 @@ class UserGreeting extends Component {
 
         <div className="planets-items-alignmnet">
           {
-            planets.map((p) => {
+            sortedResultSet.map((p) => {
               return (
                 <div key={p.name} >
                   <h3 className="planet-header"> {p.name}</h3>
