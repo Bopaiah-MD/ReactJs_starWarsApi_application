@@ -14,7 +14,8 @@ class Login extends Component {
             username: '',
             password: '',
             results: [],
-            loggedIn: false
+            loggedIn: false,
+            errorText: ''
         }
     }
 
@@ -29,13 +30,10 @@ class Login extends Component {
     }
 
     handleUsername = (e) => {
-
         this.setState({ username: e.target.value });
-
     }
 
     handlePassword = (e) => {
-
         this.setState({ password: e.target.value });
     }
 
@@ -48,30 +46,25 @@ class Login extends Component {
 
     handleClick() {
 
-        if (this.state.results.length > 0) {
-            let count = 0;
-            this.state.results.map((res) => {
+        if (this.state.username === "" || this.state.password === "") {
 
-                if (res.name === this.state.username && res.birth_year === this.state.password) {
-                    count++;
-                    return res;
-                }
-                return null
-            });
-
-
-            if (count > 0) {
-                console.log("login matched")
-                this.setState({ loggedIn: true })
-            }
-            else {
-
-                console.log(" Not a valid star wars character")
-
-            }
+            this.setState({ errorText: 'Enter the Fields' })
         }
         else {
-            alert("HINT: UserName: Luke Skywalker password: 19BBY");
+            if (this.state.results.length > 0) {
+                let count = 0;
+                this.state.results.map((res) => {
+
+                    if (res.name === this.state.username && res.birth_year === this.state.password) {
+                        count++;
+                        return res;
+                    }
+                    return null
+                });
+                if (count > 0) {
+                    this.setState({ loggedIn: true })
+                }
+            }
         }
     }
 
@@ -90,6 +83,7 @@ class Login extends Component {
                                 floatingLabelText="Star Wars Character Name"
                                 onChange={this.handleUsername}
                                 value={this.state.username}
+                                errorText={this.state.errorText}
                             />
                             <br />
                             <TextField
@@ -98,6 +92,7 @@ class Login extends Component {
                                 floatingLabelText="Star Wars birth year"
                                 onChange={this.handlePassword}
                                 value={this.state.password}
+                                errorText={this.state.errorText}
                             />
                             <br />
                             <RaisedButton
@@ -105,6 +100,7 @@ class Login extends Component {
                                 primary={true}
                                 style={style}
                                 onClick={() => this.handleClick()}
+
                             />
                             <RaisedButton
                                 label="Reset"
