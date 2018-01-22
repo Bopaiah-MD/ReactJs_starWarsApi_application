@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
+
 import './App.css';
 
-import CharInfo from './CharInfo'
+import CharInfo from './components/CharInfo'
 import Login from './Login';
 
 class UserGreeting extends Component {
@@ -60,6 +62,7 @@ class UserGreeting extends Component {
           (<div className="login-body">
             <h1 className="trend-css" >Star Wars Character and planets Info</h1>
             <button className="logout-style" onClick={this.logout} >LOGOUT</button>
+            <span className ="search-planet-css" ><Link to ="/search" > Search planets </Link> </span>
             <p className="trend-css">“Traveling through hyperspace ain't like dusting crops, farm boy.” </p>
 
             <div className="planets-items-alignmnet">

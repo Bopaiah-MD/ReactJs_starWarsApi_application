@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -6,8 +7,8 @@ import TextField from 'material-ui/TextField';
 
 import UserGreeting from './UserGreeting'
 
-class Login extends Component {
 
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,13 +21,16 @@ class Login extends Component {
     }
 
     componentDidMount() {
+        this.fetchData()
+    }
 
-        fetch('https://swapi.co/api/people/').then((response) => response.json()).then((finalResponse) => {
-
-            this.setState({
-                results: finalResponse.results
+    fetchData = () => {
+        fetch('https://swapi.co/api/people/').then((response) =>
+            response.json()).then((finalResponse) => {
+                this.setState({
+                    results: finalResponse.results
+                })
             })
-        })
     }
 
     handleUsername = (e) => {
@@ -69,9 +73,9 @@ class Login extends Component {
     }
 
     render() {
-
         return (
             <div className="login">
+
                 <MuiThemeProvider>
                     {this.state.loggedIn ? <UserGreeting results={this.state.results} /> :
                         (<div>
