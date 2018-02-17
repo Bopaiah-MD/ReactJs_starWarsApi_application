@@ -15,6 +15,7 @@ class SearchComponent extends Component {
   }
 
   fetchData = () => {
+    
     fetch('https://swapi.co/api/planets/').then((response) =>
       response.json()).then((finalResponse) => {
         this.setState({

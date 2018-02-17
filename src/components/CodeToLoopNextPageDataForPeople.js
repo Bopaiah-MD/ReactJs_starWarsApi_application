@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 import UserGreeting from './UserGreeting'
-
+import axios from 'axios'
 
 class Login extends Component {
     constructor(props) {
@@ -14,24 +14,58 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            results: [],
+            results: [{}],
             loggedIn: false,
             errorText: ''
         }
     }
 
-    componentDidMount() {
-        this.fetchData()
-    }
+    // componentDidMount() {
+    //     this.fetchData()
+    // }
 
-    fetchData = () => {
-        fetch('https://swapi.co/api/people/').then((response) =>
-            response.json()).then((finalResponse) => {
-                this.setState({
-                    results: finalResponse.results
-                })
-            })
+    componentDidMount() {
+        this.getPeople("https://swapi.co/api/people");
+      }
+
+    // fetchData = () => {
+    //     fetch('https://swapi.co/api/people/').then((response) =>
+    //         response.json()).then((finalResponse) => {
+    //             this.setState({
+    //                 results: finalResponse.results
+    //             })
+    //         })
+    // }
+
+  getPeople = (apiURL) => {
+    return axios.get(apiURL).then((res) => {
+      console.log("res.data",res.data)
+     // console.log("res.data.results",res.data.results)
+      // this.showDetail(res.data);
+
+      this.showDetail(res.data);
+
+      const fullData = res.data
+
+      console.log("fullData.results ",fullData.results )
+
+      this.setState({ results: fullData.results })
+    })
+  }
+
+   showDetail(data) {
+    for ( let i = 0; i < data.results.length; i++) {
+      var names = names + data.results[i].name + "\n";
+      //name1.innerText = name1.innerText + "\n" + data.results[i].name;
     }
+    if (data.next) {
+      this.getPeople(data.next);
+     } 
+     else {
+      console.log(names); // name1.innerText = names;
+    }
+  }
+
 
     handleUsername = (e) => {
         this.setState({ username: e.target.value });
@@ -73,6 +107,8 @@ class Login extends Component {
     }
 
     render() {
+
+        console.log("this.state.results",this.state.results)
         return (
             <div className="login">
 
@@ -80,7 +116,7 @@ class Login extends Component {
                     {this.state.loggedIn ? <UserGreeting results={this.state.results} /> :
                         (<div>
                             <AppBar
-                                title="Login to Star Wars"
+                                title="Login"
                             />
                             <TextField
                                 hintText="Enter your Username"
